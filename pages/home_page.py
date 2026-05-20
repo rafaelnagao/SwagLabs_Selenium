@@ -11,7 +11,10 @@ class HomePage(BasePage):
         self.close_button = (By.ID, "react-burger-cross-btn")
         self.menu_options = (By.CLASS_NAME, "bm-item")
         self.body = (By.TAG_NAME, "body")
-    
+        self.social_media_twitter = (By.CSS_SELECTOR, "a[data-test='social-twitter']")
+        self.social_media_facebook = (By.CSS_SELECTOR, "a[data-test='social-facebook']")
+        self.social_media_linkedin = (By.CSS_SELECTOR, "a[data-test='social-linkedin']")
+
     def get_url(self):
         return self.driver.current_url
 
@@ -121,24 +124,27 @@ class HomePage(BasePage):
             return 0
         
     def add_product_to_cart(self, product_name):
-        product_locator = (By.XPATH, f"//div[@class='inventory_item_name' and text()='{product_name}']/ancestor::div[@class='inventory_item']//button")
+        slug = product_name.lower().replace(" ", "-")
+        product_id = f"add-to-cart-{slug}"
         WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(product_locator)
+            EC.element_to_be_clickable((By.ID, product_id))
         ).click()
 
     def remove_product_from_cart(self, product_name):
-        product_locator = (By.XPATH, f"//div[@class='inventory_item_name' and text()='{product_name}']/ancestor::div[@class='inventory_item']//button")
+        slug = product_name.lower().replace(" ", "-")
+        product_id = f"remove-{slug}"
         WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(product_locator)
+            EC.element_to_be_clickable((By.ID, product_id))
         ).click()
 
     def is_product_in_cart(self, product_name):
-        product_locator = (By.XPATH, f"//div[@class='inventory_item_name' and text()='{product_name}']/ancestor::div[@class='inventory_item']//button")
+        slug = product_name.lower().replace(" ", "-")
+        product_id = f"remove-{slug}"
         try:
-            button = WebDriverWait(self.driver, 2).until(
-                EC.presence_of_element_located(product_locator)
+            button = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.ID, product_id))
             )
-            return button.text.strip().lower() == "remove"
+            return button.is_displayed()
         except TimeoutException:
             return False
         
@@ -152,15 +158,15 @@ class HomePage(BasePage):
     def take_full_page_screenshot(self, file_name):
         return super().take_full_page_screenshot(file_name)
     
-    def social_media_twitter(self):
-        social_twitter = self.driver.find_elements(*self.social_twitter)
+    def get_twitter_urls(self):
+        social_twitter = self.driver.find_elements(*self.social_media_twitter)
         return [link.get_attribute("href") for link in social_twitter]
 
-    def social_media_facebook(self):
-        social_facebook = self.driver.find_elements(*self.social_facebook)
+    def get_facebook_urls(self):
+        social_facebook = self.driver.find_elements(*self.social_media_facebook)
         return [link.get_attribute("href") for link in social_facebook]
-    
-    def social_media_linkedin(self):
-        social_linkedin = self.driver.find_elements(*self.social_linkedin)
+
+    def get_linkedin_urls(self):
+        social_linkedin = self.driver.find_elements(*self.social_media_linkedin)
         return [link.get_attribute("href") for link in social_linkedin]
     
