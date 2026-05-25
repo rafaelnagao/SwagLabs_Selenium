@@ -1,6 +1,4 @@
 import pytest
-from conftest import logged_in_session
-from pages import product_page
 from pages.product_page import ProductPage
 
 

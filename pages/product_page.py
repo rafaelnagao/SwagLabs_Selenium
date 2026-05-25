@@ -12,9 +12,10 @@ class ProductPage(BasePage):
         self.product_description = (By.CLASS_NAME, "inventory_details_desc")
         self.product_price = (By.CLASS_NAME, "inventory_details_price")
         self.add_to_cart_button = (By.CLASS_NAME, "btn_primary")
-        self.remove_button = (By.CLASS_NAME, "btn_secondary")
+        self.remove_button = (By.ID, "remove")
         self.back_to_products_button = (By.CLASS_NAME, "inventory_details_back_button")
         self.cart_badge_locator = (By.CLASS_NAME, "shopping_cart_badge")
+        self.cart_link = (By.CLASS_NAME, "shopping_cart_link")
     
     def go_to_product(self, product_name):
         product_link = (By.XPATH, f"//a[.//div[text()='{product_name}']]")
@@ -78,3 +79,7 @@ class ProductPage(BasePage):
             EC.element_to_be_clickable(self.back_to_products_button)
         ).click()
     
+    def go_to_cart(self):
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.cart_link)
+        ).click()
