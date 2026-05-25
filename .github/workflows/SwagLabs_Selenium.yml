@@ -1,4 +1,4 @@
-name: Selenium Pytest CI
+name: SwagLabs Selenium Pytest CI
 
 on:
   push:
@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, master, develop ]
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   test:
@@ -18,7 +21,7 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Instalar Google Chrome
         uses: browser-actions/setup-chrome@v1
@@ -28,12 +31,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Criar pasta de relatórios
+      - name: Criar pastas de relatórios
         run: mkdir -p reports screenshots
 
-      - name: Rodar testes
+      - name: Debug estrutura
         run: |
-          pytest -v -m "e2e" --junitxml=reports/junit.xml
+          pwd
+          ls -R
+          python -m pytest --collect-only -q
+
+      - name: Rodar testes
+        env:
+          CI: "true"
+        run: |
+          python -m pytest -v --junitxml=reports/junit.xml
 
       - name: Publicar artefatos
         if: always()
@@ -43,3 +54,4 @@ jobs:
           path: |
             reports/
             screenshots/
+          if-no-files-found: warn
