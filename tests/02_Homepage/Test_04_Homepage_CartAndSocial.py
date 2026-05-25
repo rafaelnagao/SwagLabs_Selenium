@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 class Test_04_Homepage_CartAndSocial:
     def test_cart_icon(self):
         homepage = HomePage(self.driver)
-        cart_icon = homepage.find_element((By.CLASS_NAME, "shopping_cart_link"))
+        cart_icon = homepage.find_element(By.CLASS_NAME, "shopping_cart_link")
         assert cart_icon.is_displayed()
     
     def test_cart_count_initial(self):
@@ -47,9 +47,9 @@ class Test_04_Homepage_CartAndSocial:
 
     def test_social_links(self):
         homepage = HomePage(self.driver)
-        twitter_link = homepage.find_element((By.CLASS_NAME, "social_twitter"))
-        facebook_link = homepage.find_element((By.CLASS_NAME, "social_facebook"))
-        linkedin_link = homepage.find_element((By.CLASS_NAME, "social_linkedin"))
+        twitter_link = homepage.find_element(By.CLASS_NAME, "social_twitter")
+        facebook_link = homepage.find_element(By.CLASS_NAME, "social_facebook")
+        linkedin_link = homepage.find_element(By.CLASS_NAME, "social_linkedin")
         assert twitter_link.is_displayed()
         assert facebook_link.is_displayed()
         assert linkedin_link.is_displayed()

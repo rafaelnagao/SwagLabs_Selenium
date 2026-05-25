@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -156,7 +158,14 @@ class HomePage(BasePage):
         return len(products)
     
     def take_full_page_screenshot(self, file_name):
-        return super().take_full_page_screenshot(file_name)
+        screenshots_dir = Path("screenshots")
+        screenshots_dir.mkdir(parents=True, exist_ok=True)
+
+        file_path = screenshots_dir / file_name
+        success = self.driver.save_screenshot(str(file_path))
+
+        assert success, f"Não foi possível salvar a screenshot em: {file_path}"
+        return str(file_path)
     
     def get_twitter_urls(self):
         social_twitter = self.driver.find_elements(*self.social_media_twitter)

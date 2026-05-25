@@ -20,13 +20,16 @@ class BasePage:
         except TimeoutException:
             raise Exception(f"Element with locator {locator} not found within the timeout period.")
 
-    def find_element(self, locator):
-        self.wait_for_element(locator)
-        return self.driver.find_element(*locator)
+    def find_element(self, by, value):
+        return self.driver.find_element(by, value)
 
-    def find_elements(self, locator):
-        self.wait_for_element(locator)
-        return self.driver.find_elements(*locator)
+    def find_elements(self, by, value):
+        return self.driver.find_elements(by, value)
+
+    def wait_for_element(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(
+            EC.visibility_of_element_located(locator)
+        )
 
     def send_keys(self, locator, text):
         self.wait_for_element(locator)
@@ -34,9 +37,9 @@ class BasePage:
         element.clear()
         element.send_keys(text)
 
-    def click(self, locator):
-        self.wait_for_element(locator)
-        element = self.find_element(locator)
+    def click(self, by, value):
+        self.wait_for_element((by, value))
+        element = self.find_element(by, value)
         element.click()
 
     def element_displayed(self, locator):

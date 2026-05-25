@@ -1,6 +1,3 @@
-import base64
-import os
-from time import sleep
 import pytest
 from pages.home_page import HomePage
 from selenium.webdriver.common.by import By
@@ -91,5 +88,5 @@ class Test_01_Homepage:
         assert all(img is not None for img in images)
         assert all(img.startswith("https://www.saucedemo.com/static/media/") for img in images)
         
-        homepage.take_full_page_screenshot("homepage_products.png")
-
+        screenshot_path = homepage.take_full_page_screenshot("homepage_products.png")
+        print(f"Screenshot salva em: {screenshot_path}")
