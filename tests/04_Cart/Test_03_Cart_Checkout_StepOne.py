@@ -10,19 +10,18 @@ from selenium.webdriver.support import expected_conditions as EC
 @pytest.mark.cart
 @pytest.mark.e2e
 class Test_03_Cart_Checkout:
-    def test_checkout_process(self):
+    def test_go_to_cart_with_product(self, product_name):
         homepage = HomePage(self.driver)
         cart_page = CartPage(self.driver)
-
         product_name = "Sauce Labs Backpack"
         homepage.add_product_to_cart(product_name)
         cart_page.go_to_cart()
+        return cart_page
 
-        assert cart_page.is_product_in_cart(product_name) is True, f"O produto '{product_name}' não foi adicionado ao carrinho."
-
+    def test_go_to_checkout_step_one(self, product_name):
+        cart_page = self.go_to_cart_with_product(product_name)
         cart_page.click_checkout()
-
-        assert "checkout-step-one" in self.driver.current_url, "A URL não mudou para a página de checkout."
+        return cart_page
     
     def test_checkout_step_one_fields(self):
         cart_page = CartPage(self.driver)

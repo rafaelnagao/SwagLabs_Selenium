@@ -8,12 +8,11 @@ from pages.home_page import HomePage
 @pytest.mark.e2e
 class Test_02_Cart_Product:
     def test_add_product_to_cart(self):
-        homepage = HomePage(self.driver)
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
 
         product_name = "Sauce Labs Backpack"
-        homepage.add_product_to_cart(product_name)
-        cart_page.go_to_cart()
+        cart_page.go_to_cart_with_product(product_name)
 
         assert cart_page.is_product_in_cart(product_name) is True, f"O produto '{product_name}' não foi adicionado ao carrinho."
 
