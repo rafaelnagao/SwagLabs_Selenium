@@ -8,13 +8,13 @@
   <img src="https://img.shields.io/badge/Chrome-Headless-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Badge" />
 </p>
 
-Projeto de automação de testes end-to-end para o site **SauceDemo / Swag Labs**, desenvolvido com Python, Selenium WebDriver e pytest. A suíte segue Page Object Model (POM), usa fixtures para setup/teardown e possui integração contínua com GitHub Actions. [1][2][3]
+Projeto de automação de testes end-to-end para o site **SauceDemo / Swag Labs**, desenvolvido com Python, Selenium WebDriver e pytest. A suíte segue Page Object Model (POM), usa fixtures para setup/teardown e possui integração contínua com GitHub Actions.
 
 ***
 
 ## 📌 Visão geral
 
-Este projeto foi criado para validar fluxos principais da aplicação, como login, navegação, carrinho e checkout, com foco em organização, reutilização de código e estabilidade da execução. O uso de page objects e fixtures ajuda a manter os testes mais legíveis e menos frágeis. [1][4][5]
+Este projeto foi criado para validar fluxos principais da aplicação, como login, navegação, carrinho e checkout, com foco em organização, reutilização de código e estabilidade da execução. O uso de page objects e fixtures ajuda a manter os testes mais legíveis e menos frágeis.
 
 ## 🛠️ Stack
 
@@ -25,7 +25,7 @@ Este projeto foi criado para validar fluxos principais da aplicação, como logi
 - ⚙️ GitHub Actions
 - 🧭 Google Chrome Headless
 
-O pytest oferece suporte nativo a fixtures e markers, o que facilita a separação de setup, teardown e grupos funcionais de testes. [2][4]
+O pytest oferece suporte nativo a fixtures e markers, o que facilita a separação de setup, teardown e grupos funcionais de testes.
 
 ## 📂 Estrutura do projeto
 
@@ -47,7 +47,7 @@ SwagLabs_Selenium/
 └── requirements.txt
 ```
 
-A separação entre `pages`, `tests` e arquivos de configuração segue a organização típica de frameworks Selenium com POM. [1][6]
+A separação entre `pages`, `tests` e arquivos de configuração segue a organização típica de frameworks Selenium com POM.
 
 ## ✅ Funcionalidades cobertas
 
@@ -58,7 +58,7 @@ A separação entre `pages`, `tests` e arquivos de configuração segue a organi
 - 🧾 Checkout step one e step two.
 - 🔁 Fluxos end-to-end com markers.
 
-Os markers do pytest permitem executar grupos específicos da suíte sem precisar rodar todos os cenários. [7][8]
+Os markers do pytest permitem executar grupos específicos da suíte sem precisar rodar todos os cenários.
 
 ## ⚙️ Pré-requisitos
 
@@ -69,7 +69,7 @@ Antes de executar localmente:
 - Ambiente virtual recomendado.
 - Dependências instaladas com `requirements.txt`.
 
-O pipeline em CI também usa Python 3.12 e Chrome headless para manter o comportamento consistente entre máquina local e GitHub Actions. [3][9]
+O pipeline em CI também usa Python 3.12 e Chrome headless para manter o comportamento consistente entre máquina local e GitHub Actions.
 
 ## 🚀 Instalação
 
@@ -125,23 +125,23 @@ python -m pytest -v -m cart
 python -m pytest -v -m e2e
 ```
 
-A documentação do pytest recomenda declarar markers no `pytest.ini` para evitar avisos e permitir organização clara da suíte. [7][8]
+A documentação do pytest recomenda declarar markers no `pytest.ini` para evitar avisos e permitir organização clara da suíte.
 
 ## 🧩 Configuração do browser
 
-O WebDriver é configurado no `conftest.py` com suporte a execução local e em CI. Em ambiente GitHub Actions, o Chrome roda em modo headless com opções como `--no-sandbox` e `--disable-dev-shm-usage`, padrão comum para maior estabilidade em runners Linux. [10][9]
+O WebDriver é configurado no `conftest.py` com suporte a execução local e em CI. Em ambiente GitHub Actions, o Chrome roda em modo headless com opções como `--no-sandbox` e `--disable-dev-shm-usage`, padrão comum para maior estabilidade em runners Linux.
 
-As fixtures com `yield` fazem a criação e finalização do navegador de forma controlada, que é o padrão recomendado pelo pytest para gerenciamento de recursos. [2][4]
+As fixtures com `yield` fazem a criação e finalização do navegador de forma controlada, que é o padrão recomendado pelo pytest para gerenciamento de recursos.
 
 ## 🧠 Boas práticas aplicadas
 
-- Page Object Model para encapsular ações da interface. [1][6]
-- Fixtures para setup e teardown reutilizáveis. [2][4]
-- Isolamento entre testes para evitar shared state. [5]
-- Markers para segmentação funcional. [7]
-- Pipeline automatizado com GitHub Actions. [3]
+- Page Object Model para encapsular ações da interface.
+- Fixtures para setup e teardown reutilizáveis.
+- Isolamento entre testes para evitar shared state.
+- Markers para segmentação funcional.
+- Pipeline automatizado com GitHub Actions.
 
-A recomendação oficial do Selenium é evitar compartilhamento de estado entre testes, pois isso reduz flakiness e dependência da ordem de execução. [5]
+A recomendação oficial do Selenium é evitar compartilhamento de estado entre testes, pois isso reduz flakiness e dependência da ordem de execução.
 
 ## 🔄 CI com GitHub Actions
 
@@ -154,7 +154,7 @@ O workflow automatiza:
 - Geração de relatório JUnit XML.
 - Upload de artifacts.
 
-Esse fluxo está alinhado com o uso do GitHub Actions para pipelines Python com pytest e publicação de resultados de execução. [3][11]
+Esse fluxo está alinhado com o uso do GitHub Actions para pipelines Python com pytest e publicação de resultados de execução.
 
 ## 📦 Artefatos
 
@@ -163,17 +163,17 @@ Durante o pipeline, podem ser gerados e publicados:
 - `reports/junit.xml`
 - `screenshots/`
 
-O upload de artifacts é um recurso padrão do GitHub Actions e facilita depuração de falhas em CI. [11][12]
+O upload de artifacts é um recurso padrão do GitHub Actions e facilita depuração de falhas em CI.
 
 ## 📁 Arquivos principais
 
 | Arquivo | Descrição |
 |---|---|
-| `conftest.py` | Fixtures, setup e teardown do WebDriver. [2][4] |
-| `pytest.ini` | Markers, testpaths e configuração do pytest. [7] |
-| `pages/` | Implementação dos page objects. [1] |
+| `conftest.py` | Fixtures, setup e teardown do WebDriver. |
+| `pytest.ini` | Markers, testpaths e configuração do pytest. |
+| `pages/` | Implementação dos page objects. |
 | `tests/` | Casos de teste organizados por funcionalidade. |
-| `.github/workflows/selenium-ci.yml` | Pipeline de integração contínua. [3] |
+| `.github/workflows/selenium-ci.yml` | Pipeline de integração contínua. |
 
 ## 📈 Melhorias futuras
 
@@ -182,4 +182,4 @@ O upload de artifacts é um recurso padrão do GitHub Actions e facilita depura�
 - Criar matriz de versões Python.
 - Publicar relatórios mais ricos no CI.
 
-Essas extensões são comuns em pipelines mais maduros para projetos Python com testes automatizados. [3][13]
+Essas extensões são comuns em pipelines mais maduros para projetos Python com testes automatizados.
