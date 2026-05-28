@@ -10,32 +10,32 @@ from selenium.webdriver.support import expected_conditions as EC
 @pytest.mark.cart
 @pytest.mark.e2e
 class Test_03_Cart_Checkout:
-    def test_go_to_cart_with_product(self, product_name):
-        homepage = HomePage(self.driver)
-        cart_page = CartPage(self.driver)
-        product_name = "Sauce Labs Backpack"
-        homepage.add_product_to_cart(product_name)
-        cart_page.go_to_cart()
-        return cart_page
-
-    def test_go_to_checkout_step_one(self, product_name):
-        cart_page = self.go_to_cart_with_product(product_name)
-        cart_page.click_checkout()
-        return cart_page
-    
     def test_checkout_step_one_fields(self):
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
 
-        first_name_field = cart_page.is_element_present(By.ID, "first-name")
-        last_name_field = cart_page.is_element_present(By.ID, "last-name")
-        postal_code_field = cart_page.is_element_present(By.ID, "postal-code")
+        homepage.add_product_to_cart("Sauce Labs Backpack")
+        cart_page.go_to_cart()
+        cart_page.click_checkout()
 
-        assert first_name_field, "O campo 'First Name' não está presente na página de checkout."
-        assert last_name_field, "O campo 'Last Name' não está presente na página de checkout."
-        assert postal_code_field, "O campo 'Postal Code' não está presente na página de checkout."
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-one.html")
+        )
+        assert cart_page.is_element_present(By.ID, "first-name")
+        assert cart_page.is_element_present(By.ID, "last-name")
+        assert cart_page.is_element_present(By.ID, "postal-code")
     
     def test_checkout_step_one_fields_validation(self):
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
+
+        homepage.add_product_to_cart("Sauce Labs Backpack")
+        cart_page.go_to_cart()
+        cart_page.click_checkout()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-one.html")
+        )
 
         cart_page.click(By.ID, "continue")
 
@@ -59,7 +59,15 @@ class Test_03_Cart_Checkout:
 
     def test_checkout_step_one_cancel(self):
         cart_page = CartPage(self.driver)
-        self.driver.back()
+        homepage = HomePage(self.driver)
+
+        homepage.add_product_to_cart("Sauce Labs Backpack")
+        cart_page.go_to_cart()
+        cart_page.click_checkout()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.url_contains("checkout-step-one.html")
+        )
 
         cancel_button = cart_page.is_element_present(By.ID, "cancel")
         assert cancel_button, "O botão 'Cancel' não está presente na página de checkout."
@@ -74,7 +82,9 @@ class Test_03_Cart_Checkout:
     
     def test_checkout_step_one_continue(self):
         cart_page = CartPage(self.driver)
-
+        homepage = HomePage(self.driver)
+        homepage.add_product_to_cart("Sauce Labs Backpack")
+        cart_page.go_to_cart()
         cart_page.click_checkout()
 
         cart_page.send_keys(By.ID, "first-name", "Rafael")

@@ -1,6 +1,7 @@
 from pathlib import Path
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from pages.home_page import HomePage
 
 
 class CartPage(BasePage):
@@ -29,6 +30,17 @@ class CartPage(BasePage):
 
     def go_to_cart(self):
         self.click(*self.cart_link)
+
+    def go_to_cart_with_product(self, product_name):
+        homepage = HomePage(self.driver)
+        homepage.add_product_to_cart(product_name)
+        self.go_to_cart()
+        return self
+
+    def go_to_checkout_step_one_with_product(self, product_name):
+        self.go_to_cart_with_product(product_name)
+        self.click_checkout()
+        return self
 
     def get_title(self):
         return self.find_element(*self.title).text.strip()

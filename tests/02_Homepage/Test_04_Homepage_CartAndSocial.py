@@ -28,6 +28,7 @@ class Test_04_Homepage_CartAndSocial:
     def test_remove_product_from_cart(self):
         homepage = HomePage(self.driver)
         product_name = "Sauce Labs Backpack"
+        homepage.add_product_to_cart(product_name)
         homepage.remove_product_from_cart(product_name)
         assert homepage.is_product_in_cart(product_name) is False
         cart_count = homepage.get_cart_count()

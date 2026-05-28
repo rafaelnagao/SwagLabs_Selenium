@@ -34,6 +34,15 @@ class Test_04_Cart_Checkout_StepTwo:
 
     def test_checkout_step_two_cancel(self):
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
+
+        homepage.add_product_to_cart("Sauce Labs Backpack")
+        cart_page.go_to_cart()
+        cart_page.click_checkout()
+        cart_page.send_keys(By.ID, "first-name", "Rafael")
+        cart_page.send_keys(By.ID, "last-name", "Nagao")
+        cart_page.send_keys(By.ID, "postal-code", "12345")
+        cart_page.click(By.ID, "continue")
 
         cancel_button = cart_page.is_element_present(By.ID, "cancel")
         assert cancel_button, "O botão 'Cancel' não está presente na página de checkout step two."
@@ -43,6 +52,8 @@ class Test_04_Cart_Checkout_StepTwo:
     
     def test_checkout_step_two_finish(self):
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
+        homepage.add_product_to_cart("Sauce Labs Backpack")
         cart_page.go_to_cart()
 
         cart_page.click_checkout()

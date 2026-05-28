@@ -20,6 +20,7 @@ class Test_02_Cart_Product:
         cart_page = CartPage(self.driver)
 
         product_name = "Sauce Labs Backpack"
+        cart_page.go_to_cart_with_product(product_name)
         cart_page.remove_item(product_name)
 
         assert cart_page.is_product_in_cart(product_name) is False, f"O produto '{product_name}' não foi removido do carrinho."
@@ -27,8 +28,6 @@ class Test_02_Cart_Product:
     def test_cart_count_after_adding_products(self):
         homepage = HomePage(self.driver)
         cart_page = CartPage(self.driver)
-
-        cart_page.continue_shopping()
 
         products_to_add = ["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt"]
         for product in products_to_add:
@@ -39,6 +38,13 @@ class Test_02_Cart_Product:
     
     def test_cart_count_after_removing_products(self):
         cart_page = CartPage(self.driver)
+        homepage = HomePage(self.driver)
+
+        products_to_add = ["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt"]
+        for product in products_to_add:
+            homepage.add_product_to_cart(product)
+        
+        cart_page.go_to_cart()
 
         products_to_remove = ["Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt"]
         for product in products_to_remove:
